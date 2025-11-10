@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdqbowfw23nom"]
+
+[ext_resource type="PackedScene" uid="uid://bnnk4hyf8t4o2" path="res://scenes/Entities/player.tscn" id="2_bswci"]
+[ext_resource type="Texture2D" uid="uid://bv3n8pewrt5kc" path="res://icon.svg" id="2_rus8k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nkto"]
+size = Vector2(212, 24.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bswci"]
+size = Vector2(8, 217)
+
+[node name="Level 1" type="Node2D"]
+
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2(331, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2(-0.5, 0.25)
+shape = SubResource("RectangleShape2D_4nkto")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+position = Vector2(-1.5, 0.5)
+scale = Vector2(1.6328125, 0.19531243)
+texture = ExtResource("2_rus8k")
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(331, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+position = Vector2(255.5, 0.25)
+shape = SubResource("RectangleShape2D_4nkto")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform2"]
+position = Vector2(254.99997, 1)
+scale = Vector2(1.6328125, 0.19531243)
+texture = ExtResource("2_rus8k")
+
+[node name="Platform3" type="StaticBody2D" parent="."]
+position = Vector2(331, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+position = Vector2(492, -60)
+shape = SubResource("RectangleShape2D_4nkto")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform3"]
+position = Vector2(492, -59)
+scale = Vector2(1.6328125, 0.19531243)
+texture = ExtResource("2_rus8k")
+
+[node name="Player" parent="." instance=ExtResource("2_bswci")]
+position = Vector2(254, 164)
+timeToReachMaxSpeed = 0.05
+jumps = 2
+coyoteTime = 0.15
+jumpBuffering = 0.15
+wallJump = true
+wallSliding = 2.0
+dashType = 3
+canRoll = true
+run = true
+idle = true
+
+[node name="Platform4" type="StaticBody2D" parent="."]
+position = Vector2(220, 141)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform4"]
+position = Vector2(0, 3.0517578e-05)
+scale = Vector2(0.04687499, 1.6796876)
+texture = ExtResource("2_rus8k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_bswci")
