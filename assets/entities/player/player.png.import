@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy52c2i66hru"
-path="res://.godot/imported/minion-walk.png-978c0087f105c0ce2d356b67874a4124.ctex"
+uid="uid://b00grg0amkqox"
+path="res://.godot/imported/player.png-892bd97ce6ffb2d57620539eb8b778ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Entities/Minion/minion-walk.png"
-dest_files=["res://.godot/imported/minion-walk.png-978c0087f105c0ce2d356b67874a4124.ctex"]
+source_file="res://assets/entities/player/player.png"
+dest_files=["res://.godot/imported/player.png-892bd97ce6ffb2d57620539eb8b778ac.ctex"]
 
 [params]
 

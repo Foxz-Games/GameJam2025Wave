@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt8f0n0l116q8"
-path="res://.godot/imported/minion-idle.png-4442710d99e7ff8cd07c2072502bf221.ctex"
+uid="uid://ctofyek8da85s"
+path="res://.godot/imported/player-idle.png-7123cb506e992959d9cb3b7a0b6a5f72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Entities/Minion/minion-idle.png"
-dest_files=["res://.godot/imported/minion-idle.png-4442710d99e7ff8cd07c2072502bf221.ctex"]
+source_file="res://assets/entities/player/player-idle.png"
+dest_files=["res://.godot/imported/player-idle.png-7123cb506e992959d9cb3b7a0b6a5f72.ctex"]
 
 [params]
 

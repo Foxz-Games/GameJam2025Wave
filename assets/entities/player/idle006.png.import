@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctmh4h10e3srx"
-path="res://.godot/imported/minion-dash.png-02b9c0ce7cb1e85f2ca05ce8197bc230.ctex"
+uid="uid://b70i48swycje3"
+path="res://.godot/imported/idle006.png-7fdb1e7071d16ba58570fc4c7bf03531.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Entities/Minion/minion-dash.png"
-dest_files=["res://.godot/imported/minion-dash.png-02b9c0ce7cb1e85f2ca05ce8197bc230.ctex"]
+source_file="res://assets/entities/player/idle006.png"
+dest_files=["res://.godot/imported/idle006.png-7fdb1e7071d16ba58570fc4c7bf03531.ctex"]
 
 [params]
 

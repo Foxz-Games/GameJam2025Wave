@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dke57bvlv0dnc"
-path="res://.godot/imported/idle003.png-f521b2fcdab66183878fcec21eb8a0ad.ctex"
+uid="uid://dy52c2i66hru"
+path="res://.godot/imported/minion-walk.png-ee2880a410ddaaf62352e8441df4da8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Entities/Player/idle003.png"
-dest_files=["res://.godot/imported/idle003.png-f521b2fcdab66183878fcec21eb8a0ad.ctex"]
+source_file="res://assets/entities/minion/minion-walk.png"
+dest_files=["res://.godot/imported/minion-walk.png-ee2880a410ddaaf62352e8441df4da8f.ctex"]
 
 [params]
 

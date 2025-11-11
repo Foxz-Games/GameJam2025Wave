@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj6bnni4demeg"
-path="res://.godot/imported/player-run-Sheet.png-a172b4bb5f3b7080643a3f6e7427c62a.ctex"
+uid="uid://dt8f0n0l116q8"
+path="res://.godot/imported/minion-idle.png-ad32fb6677adfa21a6d75b7987495faa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Entities/Player/player-run-Sheet.png"
-dest_files=["res://.godot/imported/player-run-Sheet.png-a172b4bb5f3b7080643a3f6e7427c62a.ctex"]
+source_file="res://assets/entities/minion/minion-idle.png"
+dest_files=["res://.godot/imported/minion-idle.png-ad32fb6677adfa21a6d75b7987495faa.ctex"]
 
 [params]
 
