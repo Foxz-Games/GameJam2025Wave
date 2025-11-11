@@ -1,4 +1,4 @@
-extends CharacterBody2D
+dextends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
 
