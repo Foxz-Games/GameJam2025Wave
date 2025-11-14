@@ -17,6 +17,11 @@ wallSliding = 2.0
 dashType = 3
 canRoll = true
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+
 [node name="GameTileMap" type="Node2D" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="GameTileMap"]
