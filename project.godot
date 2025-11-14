@@ -34,6 +34,10 @@ folder_colors={
 "res://tilesets/": "yellow"
 }
 
+[global_group]
+
+Player=""
+
 [input]
 
 left={

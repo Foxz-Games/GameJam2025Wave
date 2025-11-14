@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=4 uid="uid://cdqbowfw23nom"]
+[gd_scene load_steps=8 format=4 uid="uid://cdqbowfw23nom"]
 
 [ext_resource type="PackedScene" uid="uid://bnnk4hyf8t4o2" path="res://scenes/Entities/player.tscn" id="2_bswci"]
 [ext_resource type="PackedScene" uid="uid://4mwqledvmyt0" path="res://scenes/Entities/enemy.tscn" id="3_5xbjy"]
 [ext_resource type="TileSet" uid="uid://dxdweq5p2ureq" path="res://tilesets/game_tile_set.tres" id="3_rus8k"]
+[ext_resource type="Script" uid="uid://ca63p6des827w" path="res://scripts/deathzone.gd" id="4_5xbjy"]
+[ext_resource type="Script" uid="uid://c0wb67sb5dyqm" path="res://scripts/checkpoint_manager.gd" id="5_4nkto"]
+[ext_resource type="PackedScene" uid="uid://bks4e40etsfj0" path="res://scenes/checkpoint.tscn" id="6_fcfvj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rus8k"]
+size = Vector2(1257, 69.5)
 
 [node name="Level 1 Scene" type="Node2D"]
 texture_filter = 1
 
-[node name="Player" parent="." instance=ExtResource("2_bswci")]
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("2_bswci")]
 position = Vector2(250, 190)
 timeToReachMaxSpeed = 0.05
 jumps = 2
@@ -28,7 +34,7 @@ position_smoothing_speed = 3.0
 [node name="GameTileMap" type="Node2D" parent="."]
 
 [node name="Ground" type="TileMapLayer" parent="GameTileMap"]
-tile_map_data = PackedByteArray("AAASAA0AAQAJAAEAAAATAA0AAQAJAAEAAAAUAA0AAQAJAAEAAAAVAA0AAQAKAAEAAAAWAA0AAQAJAAEAAAAXAA0AAQAIAAEAAAAYAA0AAQAIAAEAAAAZAA0AAQAIAAEAAAAaAA0AAQALAAEAAAAqAA0AAQALAAEAAAApAA0AAQAHAAEAAAAoAA0AAQAIAAEAAAAnAA0AAQAJAAEAAAAmAA0AAQAIAAEAAAAlAA0AAQAHAAEAAAAkAA0AAQAJAAEAAAAjAA0AAQAJAAEAAAAiAA0AAQAIAAEAAAAhAA0AAQAHAAEAAAAgAA0AAQAHAAEAAAAfAA0AAQAHAAEAAAAeAA0AAQALAAEAABAOAA0AAQAIAAEAAAAPAA0AAQAKAAEAAAAQAA0AAQAKAAEAAAARAA0AAQAJAAEAAAArAAgAAQAWAAMAAAAsAAgAAQAMAAAAAAAtAAgAAQAMAAAAAAAuAAgAAQAPAAAAAAAvAAgAAQANAAAAAAAwAAgAAQAOAAAAAAAlAAYAAQAXAAMAAAAkAAYAAQANAAAAAAAjAAYAAQAOAAAAAAAiAAYAAQANAAAAAAAhAAYAAQAPAAAAAAAgAAYAAQANAAAAAAAfAAYAAQAMAAAAAAAeAAYAAQAPAAAAAAAtAAMAAQAPAAAAAAAtAAQAAQAPAAEAAAAqAAMAAQAMAAAAAAAqAAQAAQAMAAEAAAArAAMAAQANAAAAAAArAAQAAQANAAEAAAAsAAMAAQAOAAAAAAAsAAQAAQAOAAEAAAA=")
+tile_map_data = PackedByteArray("AAASAA0AAQAJAAEAAAATAA0AAQAJAAEAAAAUAA0AAQAJAAEAAAAVAA0AAQAKAAEAAAAWAA0AAQAJAAEAAAAXAA0AAQAIAAEAAAAYAA0AAQAIAAEAAAAZAA0AAQAIAAEAAAAaAA0AAQALAAEAAAAqAA0AAQALAAEAAAApAA0AAQAHAAEAAAAoAA0AAQAIAAEAAAAnAA0AAQAJAAEAAAAmAA0AAQAIAAEAAAAlAA0AAQAHAAEAAAAkAA0AAQAJAAEAAAAjAA0AAQAJAAEAAAAiAA0AAQAIAAEAAAAhAA0AAQAHAAEAAAAgAA0AAQAHAAEAAAAfAA0AAQAHAAEAAAAeAA0AAQALAAEAABAOAA0AAQAIAAEAAAAPAA0AAQAKAAEAAAAQAA0AAQAKAAEAAAARAA0AAQAJAAEAAAArAAgAAQAWAAMAAAAsAAgAAQAMAAAAAAAtAAgAAQAMAAAAAAAuAAgAAQAPAAAAAAAvAAgAAQANAAAAAAAwAAgAAQAOAAAAAAAlAAYAAQAXAAMAAAAkAAYAAQANAAAAAAAjAAYAAQAOAAAAAAAiAAYAAQANAAAAAAAhAAYAAQAPAAAAAAAgAAYAAQANAAAAAAAfAAYAAQAMAAAAAAAeAAYAAQAPAAAAAAAtAAMAAQAPAAAAAAAtAAQAAQAPAAEAAAAqAAMAAQAMAAAAAAAqAAQAAQAMAAEAAAArAAMAAQANAAAAAAArAAQAAQANAAEAAAAsAAMAAQAOAAAAAAAsAAQAAQAOAAEAAAAuAP//AQAMAAAAAAAuAAAAAQAMAAEAAAAvAP//AQANAAAAAAAvAAAAAQANAAEAAAAwAP//AQAOAAAAAAAwAAAAAQAOAAEAAAAxAP//AQAPAAAAAAAxAAAAAQAPAAEAAAAyAP//AQAMAAAAAAAyAAAAAQAMAAEAAAAzAP//AQANAAAAAAAzAAAAAQANAAEAAAA0AP//AQAOAAAAAAA0AAAAAQAOAAEAAAA1AP//AQAPAAAAAAA1AAAAAQAPAAEAAAA2AP//AQAMAAAAAAA2AAAAAQAMAAEAAAA3AP//AQANAAAAAAA3AAAAAQANAAEAAAA4AP//AQAOAAAAAAA4AAAAAQAOAAEAAAA5AP//AQAPAAAAAAA5AAAAAQAPAAEAAAAyAPv/AQAMAAAAAAAyAPz/AQAMAAEAAAAzAPv/AQANAAAAAAAzAPz/AQANAAEAAAA0APv/AQAOAAAAAAA0APz/AQAOAAEAAAA1APv/AQAPAAAAAAA1APz/AQAPAAEAAAA=")
 tile_set = ExtResource("3_rus8k")
 
 [node name="Walls" type="TileMapLayer" parent="GameTileMap"]
@@ -42,3 +48,18 @@ tile_set = ExtResource("3_rus8k")
 collision_enabled = false
 
 [node name="Enemy" parent="." instance=ExtResource("3_5xbjy")]
+
+[node name="DeathZone" type="Area2D" parent="."]
+script = ExtResource("4_5xbjy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(640, 581)
+shape = SubResource("RectangleShape2D_rus8k")
+
+[node name="CheckpointManager" type="Node" parent="."]
+script = ExtResource("5_4nkto")
+
+[node name="Checkpoint" parent="CheckpointManager" instance=ExtResource("6_fcfvj")]
+position = Vector2(802, -80)
+
+[connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_body_entered"]
