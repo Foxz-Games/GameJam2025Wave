@@ -168,35 +168,37 @@ radius = 7.071068
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_vw3cy")
+metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(501, 196)
+position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_e3sih")
 animation = &"dash"
 frame = 12
 frame_progress = 1.0
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(501, 197)
 shape = SubResource("CircleShape2D_2y5yt")
+metadata/_edit_lock_ = true
 
 [node name="FloorDetection_Left" type="RayCast2D" parent="."]
-position = Vector2(501, 197)
 target_position = Vector2(-23, 10)
 collide_with_areas = true
+metadata/_edit_lock_ = true
 
 [node name="FloorDetection_Right" type="RayCast2D" parent="."]
-position = Vector2(501, 197)
 target_position = Vector2(23, 10)
 collide_with_areas = true
+metadata/_edit_lock_ = true
 
 [node name="PlayerDetection_Left" type="RayCast2D" parent="."]
-position = Vector2(501, 197)
 target_position = Vector2(-36, 0)
+metadata/_edit_lock_ = true
 
 [node name="PlayerDetection_Right" type="RayCast2D" parent="."]
-position = Vector2(501, 197)
 target_position = Vector2(36, 0)
+metadata/_edit_lock_ = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("5_k22qx")

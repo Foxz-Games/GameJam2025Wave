@@ -35,9 +35,16 @@ position_smoothing_speed = 3.0
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("3_5xbjy")]
+position = Vector2(637, 201)
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("3_5xbjy")]
-position = Vector2(324, -221)
+position = Vector2(818, -23)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("3_5xbjy")]
+position = Vector2(1145, -23)
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("3_5xbjy")]
+position = Vector2(997, -184)
 
 [node name="GameTileMap" type="Node2D" parent="."]
 
