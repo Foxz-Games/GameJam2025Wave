@@ -655,13 +655,13 @@ func _dashingTime(time):
 	dashing = true
 	await get_tree().create_timer(time).timeout
 	dashing = false
-	if !is_on_floor():
-		velocity.y = -gravityScale * 10
+	#if !is_on_floor():
+		#velocity.y = -gravityScale * 10
 
 func _rollingTime(time):
 	rolling = true
 	await get_tree().create_timer(time).timeout
-	rolling = false	
+	rolling = false
 
 func _groundPound():
 	appliedTerminalVelocity = terminalVelocity * 10

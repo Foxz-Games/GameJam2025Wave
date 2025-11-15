@@ -1,44 +1,26 @@
-extends CharacterBody2D
+class_name EnemyController extends CharacterBody2D
 
-enum State {
-	IDLE,
-	PATROL,
-	WALKING,
-	ATTACK,
-	DEAD,
-}
-
-const SPEED = 75.0
-const JUMP_VELOCITY = -400.0
-
-@export var _state = State.PATROL
 @onready var sprite = $AnimatedSprite2D
+@onready var state_machine = $StateMachine
+
 @onready var floor_detector_left = $FloorDetection_Left
 @onready var floor_detector_right = $FloorDetection_Right
-@onready var player_detection = $PlayerDetection
+@onready var player_detection_left = $PlayerDetection_Left
+@onready var player_detection_right = $PlayerDetection_Right
+
+func _ready() -> void:
+	var states: Array[State] = [
+		EnemyIdleState.new(self),
+		EnemyPatrolState.new(self),
+		EnemyAttackState.new(self),
+	]
+	state_machine.start_machine(states)
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	match _state:
-		State.PATROL:
-			if player_detection.is_colliding():
-				_state = State.ATTACK
-			elif not floor_detector_left.is_colliding():
-				velocity.x = SPEED
-				sprite.flip_h = false
-			elif not floor_detector_right.is_colliding():
-				velocity.x = -SPEED
-				sprite.flip_h = true
-			
-			if is_on_wall():
-				velocity.x = -velocity.x
-				
-			sprite.play("walk")
-		
-		State.ATTACK:
-			sprite.play("dash")
-
 	move_and_slide()
+
+#
+#func _attackingTime(time):
+	#attacking = true
+	#await get_tree().create_timer(time).timeout
+	#attacking = false

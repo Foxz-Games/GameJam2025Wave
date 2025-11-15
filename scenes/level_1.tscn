@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bnnk4hyf8t4o2" path="res://scenes/Entities/player.tscn" id="2_bswci"]
 [ext_resource type="PackedScene" uid="uid://4mwqledvmyt0" path="res://scenes/Entities/enemy.tscn" id="3_5xbjy"]
 [ext_resource type="TileSet" uid="uid://dxdweq5p2ureq" path="res://tilesets/game_tile_set.tres" id="3_rus8k"]
-[ext_resource type="Script" uid="uid://ca63p6des827w" path="res://scripts/deathzone.gd" id="4_5xbjy"]
-[ext_resource type="Script" uid="uid://c0wb67sb5dyqm" path="res://scripts/checkpoint_manager.gd" id="5_4nkto"]
-[ext_resource type="PackedScene" uid="uid://bks4e40etsfj0" path="res://scenes/checkpoint.tscn" id="6_fcfvj"]
+[ext_resource type="Script" path="res://scripts/deathzone.gd" id="4_5xbjy"]
+[ext_resource type="Script" path="res://scripts/checkpoint_manager.gd" id="5_4nkto"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="6_fcfvj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rus8k"]
 size = Vector2(1257, 69.5)
@@ -43,7 +43,13 @@ tile_set = ExtResource("3_rus8k")
 
 [node name="Backdrop" type="TileMapLayer" parent="GameTileMap"]
 z_index = -1
-tile_map_data = PackedByteArray("AAAWAAwAAQABAAAAAAAXAAwAAQACAAAAAAAYAAwAAQACAAAAAAAVAAwAAQACAAAAAAAUAAwAAQAAAAAAAAAZAAwAAQADAAAAAAAeAAcAAQAWAAAAAAAeAAgAAQAWAAAAAAAhAAcAAQAWAAAAAAAhAAgAAQAWAAAAAAAhAAkAAQAWAAAAAAAhAAoAAQAWAAAAAAAhAAsAAQAWAAEAAAAeAAkAAQAWAAEAAAAfAAcAAQAPAAEAAAAgAAcAAQAPAAEAAAAiAAcAAQANAAEAAAAjAAcAAQANAAEAAAAkAAcAAQAPAAEAAAAsAAkAAQAPAAEAAAAtAAkAAQAPAAEAAAAuAAkAAQAMAAEAAAAvAAkAAQAOAAEAAAAwAAkAAQAOAAEAAAAmAAwAAQAQAAYAAAAwAAcAAQASAAUAAAASAAwAAQAOAAwAAAASAAsAAQAOAAsAAAASAAoAAQAPAAoAAAASAAkAAQAOAAoAAAATAAkAAQAPAAgAAAAUAAkAAQANAAgAAAAUAAgAAQAQAAcAAAATAAgAAQAPAAcAAAASAAgAAQAOAAsAAAASAAcAAQAOAAsAAAASAAYAAQAOAAsAAAASAAUAAQANAAcAAAARAAUAAQAMAAcAAAAQAAUAAQAMAAcAAAAPAAUAAQAMAAcAAAAOAAUAAQAMAAcAAAA=")
+tile_map_data = PackedByteArray("AAAhAAcAAQAWAAAAAAAhAAgAAQAWAAAAAAAhAAkAAQAWAAAAAAAhAAoAAQAWAAAAAAAhAAsAAQAWAAEAAAAfAAcAAQAPAAEAAAAgAAcAAQAPAAEAAAAiAAcAAQANAAEAAAAjAAcAAQANAAEAAAAkAAcAAQAPAAEAAAAsAAkAAQAPAAEAAAAtAAkAAQAPAAEAAAAuAAkAAQAMAAEAAAAvAAkAAQAOAAEAAAAwAAkAAQAOAAEAAAAmAAwAAQAQAAYAAAAwAAcAAQASAAUAAAASAAwAAQAOAAwAAAASAAsAAQAOAAsAAAASAAoAAQAPAAoAAAASAAkAAQAOAAoAAAATAAkAAQAPAAgAAAAUAAkAAQANAAgAAAAUAAgAAQAQAAcAAAATAAgAAQAPAAcAAAASAAgAAQAOAAsAAAASAAcAAQAOAAsAAAASAAYAAQAOAAsAAAASAAUAAQANAAcAAAARAAUAAQAMAAcAAAAQAAUAAQAMAAcAAAAPAAUAAQAMAAcAAAAOAAUAAQAMAAcAAAA=")
+tile_set = ExtResource("3_rus8k")
+collision_enabled = false
+
+[node name="Foreground" type="TileMapLayer" parent="GameTileMap"]
+z_index = 1
+tile_map_data = PackedByteArray("AAAWAAwAAQABAAAAAAAXAAwAAQACAAAAAAAYAAwAAQACAAAAAAAVAAwAAQACAAAAAAAUAAwAAQAAAAAAAAAZAAwAAQADAAAAAAAeAAcAAQAWAAAAAAAeAAgAAQAWAAAAAAAeAAkAAQAWAAEAAAAfAAcAAQAPAAEAAAAgAAcAAQAPAAEAAAAiAAcAAQANAAEAAAAjAAcAAQANAAEAAAAkAAcAAQAPAAEAAAAsAAkAAQAPAAEAAAAtAAkAAQAPAAEAAAAuAAkAAQAMAAEAAAAvAAkAAQAOAAEAAAAwAAkAAQAOAAEAAAAmAAwAAQAQAAYAAAAwAAcAAQASAAUAAAA=")
 tile_set = ExtResource("3_rus8k")
 collision_enabled = false
 
