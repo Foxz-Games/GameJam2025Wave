@@ -1,5 +1,18 @@
 class_name EnemyController extends CharacterBody2D
 
+@export_group("Idle State")
+@export var idle_min_time: float = 1.0
+@export var idle_max_time: float = 2.0
+
+@export_group("Patrol State")
+@export var patrol_speed: float = 100.0
+
+@export_group("Attack State")
+@export var attack_dash_speed: float = 300
+
+@export_group("Detection")
+@export var player_detection_distance: float = 100.0
+
 @onready var sprite = $AnimatedSprite2D
 @onready var state_machine = $StateMachine
 
@@ -10,6 +23,7 @@ class_name EnemyController extends CharacterBody2D
 
 
 func _ready() -> void:
+	_update_player_detection_distance()
 	var states: Array[State] = [
 		EnemyIdleState.new(self),
 		EnemyPatrolState.new(self),
@@ -19,6 +33,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
+
+func _update_player_detection_distance() -> void:
+	var distance: float = abs(player_detection_distance)
+	player_detection_left.target_position.x = -distance
+	player_detection_right.target_position.x = distance
 
 #
 #func _attackingTime(time):

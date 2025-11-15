@@ -2,16 +2,13 @@ class_name EnemyIdleState extends EnemyState
 
 static var state_name = "EnemyIdleState"
 
-@export var minIdleTime: float = 1
-@export var maxIdleTime: float = 2
-
 var timer: float = 0
  
 func get_state_name() -> String:
 	return state_name
 	
 func enter() -> void:
-	timer = randf_range(minIdleTime, maxIdleTime)
+	timer = randf_range(enemy.idle_min_time, enemy.idle_max_time)
 
 func process(_delta: float) -> void:
 	sprite.play('idle')

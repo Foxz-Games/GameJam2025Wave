@@ -2,7 +2,6 @@ class_name EnemyAttackState extends EnemyState
 
 static var state_name = "EnemyAttackState"
 
-const DASH_SPEED = 125.0
 const WINDUP_LAST_FRAME = 3  # frames 0-3 are windup
 const ROLL_LAST_FRAME = 8    # frames 4-8 are the rolling motion
 
@@ -41,7 +40,7 @@ func physics_process(_delta: float) -> void:
 
 	if current_frame <= ROLL_LAST_FRAME:
 		_apply_platform_constraints()
-		enemy.velocity.x = DASH_SPEED * roll_direction
+		enemy.velocity.x = enemy.attack_dash_speed * roll_direction
 	else:
 		enemy.velocity.x = 0
 
