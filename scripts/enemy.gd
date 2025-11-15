@@ -8,6 +8,7 @@ class_name EnemyController extends CharacterBody2D
 @onready var player_detection_left = $PlayerDetection_Left
 @onready var player_detection_right = $PlayerDetection_Right
 
+
 func _ready() -> void:
 	var states: Array[State] = [
 		EnemyIdleState.new(self),

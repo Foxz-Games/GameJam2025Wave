@@ -124,9 +124,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vapwl")
 }],
-"loop": false,
+"loop": true,
 "name": &"dash",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -173,6 +173,8 @@ script = ExtResource("1_vw3cy")
 position = Vector2(501, 196)
 sprite_frames = SubResource("SpriteFrames_e3sih")
 animation = &"dash"
+frame = 12
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(501, 197)

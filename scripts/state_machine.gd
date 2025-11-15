@@ -32,9 +32,8 @@ func transition(new_state_name: String) -> void:
 	if new_state == null:
 		push_error("Could not transition to a non-existent state (%s)." % new_state_name)
 		return
-	if current_state_name == new_state_name:
-		push_error("Could not transition to the current state. Ignoring request.")
-		return
+
+	var is_reentering_state = current_state_name == new_state_name
 		
 	if is_log_enabled:
 		print("[%s]: Exiting state \"%s\"" % [_parent_node_name, current_state.get_state_name()])
@@ -43,6 +42,7 @@ func transition(new_state_name: String) -> void:
 	current_state = new_state
 	
 	if is_log_enabled:
-		print("[%s]: Entering state \"%s\"" % [_parent_node_name, current_state.get_state_name()])
+		var message = "Re-entering state" if is_reentering_state else "Entering state"
+		print("[%s]: %s \"%s\"" % [_parent_node_name, message, current_state.get_state_name()])
 	current_state.enter()
 	

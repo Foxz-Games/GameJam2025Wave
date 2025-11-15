@@ -12,3 +12,6 @@ func _init(enemy_controller: EnemyController) -> void:
 func _apply_gravity(_delta: float) -> void:
 	if not enemy.is_on_floor_only():
 		enemy.velocity += enemy.get_gravity() * _delta
+
+func _is_player_detected() -> bool:
+	return enemy.player_detection_left.is_colliding() or enemy.player_detection_right.is_colliding()
