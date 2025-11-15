@@ -1,19 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://bnnk4hyf8t4o2"]
+[gd_scene load_steps=41 format=3 uid="uid://bnnk4hyf8t4o2"]
 
 [ext_resource type="Script" uid="uid://37lqcsqgixhs" path="res://scripts/player/UltimatePlatformerController.gd" id="1_xdo53"]
 [ext_resource type="Texture2D" uid="uid://ctofyek8da85s" path="res://assets/entities/player/player-idle.png" id="2_jqi8p"]
 [ext_resource type="Texture2D" uid="uid://w3v6jue83rfs" path="res://assets/entities/player/player-jump-Sheet.png" id="2_vpmba"]
 [ext_resource type="Texture2D" uid="uid://dj6bnni4demeg" path="res://assets/entities/player/player-run-Sheet.png" id="3_jqi8p"]
-[ext_resource type="Texture2D" uid="uid://ckue7adh8wc1y" path="res://assets/entities/player/idle000.png" id="4_kk10u"]
-[ext_resource type="Texture2D" uid="uid://be730n7l377mq" path="res://assets/entities/player/idle001.png" id="5_ltljm"]
-[ext_resource type="Texture2D" uid="uid://pi2q4taxh0dn" path="res://assets/entities/player/idle002.png" id="6_vpmba"]
-[ext_resource type="Texture2D" uid="uid://dke57bvlv0dnc" path="res://assets/entities/player/idle003.png" id="7_aolts"]
-[ext_resource type="Texture2D" uid="uid://caej512b4o32g" path="res://assets/entities/player/idle004.png" id="8_m5dj7"]
-[ext_resource type="Texture2D" uid="uid://dji4yjtxcw5nn" path="res://assets/entities/player/idle005.png" id="9_rvc5h"]
-[ext_resource type="Texture2D" uid="uid://b70i48swycje3" path="res://assets/entities/player/idle006.png" id="10_6k6pq"]
-[ext_resource type="Texture2D" uid="uid://tokp3q6t1djw" path="res://assets/entities/player/idle007.png" id="11_jip4m"]
-[ext_resource type="Texture2D" uid="uid://lallyiae41ql" path="res://assets/entities/player/idle008.png" id="12_lhje8"]
-[ext_resource type="Texture2D" uid="uid://dxss6pqrcm6vi" path="res://assets/entities/player/idle009.png" id="13_uygjg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5xbjy"]
 radius = 7.0
@@ -279,43 +269,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_5t7vh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [null]
-}
-
-[sub_resource type="Animation" id="Animation_4yslr"]
-resource_name = "idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.099999994, 0.19999999, 0.3, 0.39999998, 0.5, 0.6, 0.7, 0.79999995, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("4_kk10u"), ExtResource("5_ltljm"), ExtResource("6_vpmba"), ExtResource("7_aolts"), ExtResource("8_m5dj7"), ExtResource("9_rvc5h"), ExtResource("10_6k6pq"), ExtResource("11_jip4m"), ExtResource("12_lhje8"), ExtResource("13_uygjg")]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3wtrq"]
-_data = {
-&"RESET": SubResource("Animation_5t7vh"),
-&"idle": SubResource("Animation_4yslr")
-}
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerSprite", "PlayerCollider")]
 script = ExtResource("1_xdo53")
 PlayerSprite = NodePath("AnimatedSprite2D")
@@ -333,11 +286,3 @@ shape = SubResource("CapsuleShape2D_5xbjy")
 sprite_frames = SubResource("SpriteFrames_7gny6")
 animation = &"run"
 speed_scale = 1.5
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3wtrq")
-}
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false

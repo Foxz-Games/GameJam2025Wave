@@ -12,8 +12,7 @@ func process(_delta: float) -> void:
 	sprite.play('walk')
 	
 func physics_process(_delta: float) -> void:
-	if not enemy.is_on_floor_only():
-		enemy.velocity += enemy.get_gravity() * _delta
+	_apply_gravity(_delta)
 		
 	var facingL = sprite.flip_h
 	if abs(enemy.velocity.x) == 0:
@@ -21,9 +20,8 @@ func physics_process(_delta: float) -> void:
 			
 	if facingL and enemy.player_detection_left.is_colliding() or not facingL and enemy.player_detection_right.is_colliding():
 		state_machine.transition(EnemyAttackState.state_name)
-		#var dTime = 0.0625 * ATTACK_LENGTH
-		#_attackingTime(dTime)
 		return
+		
 	# stay on platform
 	elif not enemy.floor_detector_left.is_colliding():
 		enemy.velocity.x = WALKING_SPEED
