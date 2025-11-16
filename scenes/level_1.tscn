@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ca63p6des827w" path="res://scripts/deathzone.gd" id="4_5xbjy"]
 [ext_resource type="Script" uid="uid://c0wb67sb5dyqm" path="res://scripts/checkpoint_manager.gd" id="5_4nkto"]
 [ext_resource type="PackedScene" uid="uid://bks4e40etsfj0" path="res://scenes/checkpoint.tscn" id="6_fcfvj"]
+[ext_resource type="PackedScene" uid="uid://bg1prfon3pb6l" path="res://scripts/health.tscn" id="7_pa8r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rus8k"]
 size = Vector2(3571, 69.5)
@@ -21,8 +22,6 @@ timeToReachMaxSpeed = 0.05
 jumps = 2
 coyoteTime = 0.15
 jumpBuffering = 0.15
-wallJump = true
-wallSliding = 2.0
 dashType = 3
 canRoll = true
 
