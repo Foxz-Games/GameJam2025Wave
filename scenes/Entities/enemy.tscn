@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://4mwqledvmyt0"]
 
-[ext_resource type="Script" uid="uid://biw718h885xmt" path="res://scripts/enemy.gd" id="1_vw3cy"]
+[ext_resource type="Script" uid="uid://biw718h885xmt" path="res://scripts/enemy/enemy.gd" id="1_vw3cy"]
 [ext_resource type="Texture2D" uid="uid://dt8f0n0l116q8" path="res://assets/entities/minion/minion-idle.png" id="1_yd0c5"]
 [ext_resource type="Texture2D" uid="uid://ctmh4h10e3srx" path="res://assets/entities/minion/minion-dash.png" id="2_j04kq"]
 [ext_resource type="Texture2D" uid="uid://dy52c2i66hru" path="res://assets/entities/minion/minion-walk.png" id="3_ag0si"]
@@ -194,10 +194,12 @@ metadata/_edit_lock_ = true
 
 [node name="PlayerDetection_Left" type="RayCast2D" parent="."]
 target_position = Vector2(-36, 0)
+collision_mask = 2
 metadata/_edit_lock_ = true
 
 [node name="PlayerDetection_Right" type="RayCast2D" parent="."]
 target_position = Vector2(36, 0)
+collision_mask = 2
 metadata/_edit_lock_ = true
 
 [node name="StateMachine" type="Node" parent="."]
