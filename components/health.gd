@@ -62,5 +62,5 @@ func set_health(value: int):
 		if health == 0:
 			health_depleted.emit()
 	
-func get_health() -> bool:
+func get_health() -> int:
 	return health

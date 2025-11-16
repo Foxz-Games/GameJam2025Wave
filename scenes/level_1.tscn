@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=4 uid="uid://cdqbowfw23nom"]
+[gd_scene load_steps=10 format=4 uid="uid://cdqbowfw23nom"]
 
+[ext_resource type="Script" uid="uid://h5a2ccl8y7cq" path="res://scenes/level_1.gd" id="1_15mv3"]
 [ext_resource type="PackedScene" uid="uid://bnnk4hyf8t4o2" path="res://scenes/Entities/player.tscn" id="2_bswci"]
 [ext_resource type="PackedScene" uid="uid://4mwqledvmyt0" path="res://scenes/Entities/enemy.tscn" id="3_5xbjy"]
 [ext_resource type="TileSet" uid="uid://dxdweq5p2ureq" path="res://tilesets/game_tile_set.tres" id="3_rus8k"]
@@ -13,6 +14,7 @@ size = Vector2(3571, 69.5)
 
 [node name="Level 1 Scene" type="Node2D"]
 texture_filter = 1
+script = ExtResource("1_15mv3")
 
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("2_bswci")]
 position = Vector2(250, 190)
@@ -69,6 +71,7 @@ tile_set = ExtResource("3_rus8k")
 collision_enabled = false
 
 [node name="DeathZone" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource("4_5xbjy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
@@ -83,4 +86,5 @@ position = Vector2(802, -80)
 
 [node name="Health" parent="." instance=ExtResource("7_pa8r4")]
 
+[connection signal="player_killed" from="Player" to="." method="_on_player_killed"]
 [connection signal="body_entered" from="DeathZone" to="DeathZone" method="_on_body_entered"]

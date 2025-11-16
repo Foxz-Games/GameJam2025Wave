@@ -29,6 +29,7 @@ window/stretch/mode="viewport"
 folder_colors={
 "res://assets/": "orange",
 "res://assets/tilesets/": "yellow",
+"res://components/": "purple",
 "res://scenes/": "green",
 "res://scripts/": "pink",
 "res://tilesets/": "yellow"

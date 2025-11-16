@@ -1,10 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://bnnk4hyf8t4o2"]
+[gd_scene load_steps=43 format=3 uid="uid://bnnk4hyf8t4o2"]
 
-[ext_resource type="Script" uid="uid://37lqcsqgixhs" path="res://scripts/player/UltimatePlatformerController.gd" id="1_xdo53"]
+[ext_resource type="Script" uid="uid://37lqcsqgixhs" path="res://scripts/player/player.gd" id="1_xdo53"]
 [ext_resource type="Texture2D" uid="uid://ctofyek8da85s" path="res://assets/entities/player/player-idle.png" id="2_jqi8p"]
 [ext_resource type="Texture2D" uid="uid://w3v6jue83rfs" path="res://assets/entities/player/player-jump-Sheet.png" id="2_vpmba"]
 [ext_resource type="Texture2D" uid="uid://dj6bnni4demeg" path="res://assets/entities/player/player-run-Sheet.png" id="3_jqi8p"]
 [ext_resource type="PackedScene" uid="uid://bg1prfon3pb6l" path="res://scripts/health.tscn" id="5_kk10u"]
+[ext_resource type="Script" uid="uid://38rpj7gyde1c" path="res://components/hurtbox.gd" id="6_ltljm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5xbjy"]
 radius = 7.0
@@ -290,3 +291,14 @@ animation = &"run"
 speed_scale = 1.5
 
 [node name="Health" parent="." instance=ExtResource("5_kk10u")]
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_ltljm")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_5xbjy")
+
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
