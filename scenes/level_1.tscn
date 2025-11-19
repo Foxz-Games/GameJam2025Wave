@@ -43,8 +43,6 @@ directionalSnap = true
 jumps = 2
 coyoteTime = 0.15
 jumpBuffering = 0.15
-wallJump = true
-wallSliding = 2.0
 dashType = 3
 canRoll = true
 

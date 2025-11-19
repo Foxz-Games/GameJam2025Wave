@@ -16,7 +16,7 @@ signal player_killed
 @export var PlayerCollider: CollisionShape2D
 
 #INFO HORIZONTAL MOVEMENT 
-@export_category("L/R Movement")
+@export_group("L|R Movement")
 ##The max speed your player will move
 @export_range(50, 500) var maxSpeed: float = 200.0
 ##How fast your player will reach max speed from rest (in seconds)
@@ -29,7 +29,7 @@ signal player_killed
 @export var runningModifier: bool = false
 
 #INFO JUMPING 
-@export_category("Jumping and Gravity")
+@export_group("Jumping and Gravity")
 ##The peak height of your player's jump
 @export_range(0, 20) var jumpHeight: float = 2.0
 ##How many jumps your character can do before needing to touch the ground again. Giving more than 1 jump disables jump buffering and coyote time.
@@ -50,20 +50,22 @@ signal player_killed
 @export_range(0, 0.5) var jumpBuffering: float = 0.2
 
 #INFO EXTRAS
-@export_category("Wall Jumping")
+@export_group("Wall Jumping")
 ##Allows your player to jump off of walls. Without a Wall Kick Angle, the player will be able to scale the wall.
-@export var wallJump: bool = false
+@export var wallJump: bool = true
 ##How long the player's movement input will be ignored after wall jumping.
 @export_range(0, 0.5) var inputPauseAfterWallJump: float = 0.1
 ##The angle at which your player will jump away from the wall. 0 is straight away from the wall, 90 is straight up. Does not account for gravity
 @export_range(0, 90) var wallKickAngle: float = 60.0
-##The player's gravity will be divided by this number when touch a wall and descending. Set to 1 by default meaning no change will be made to the gravity and there is effectively no wall sliding. THIS IS OVERRIDDED BY WALL LATCH.
-@export_range(1, 20) var wallSliding: float = 1.0
-##If enabled, the player's gravity will be set to 0 when touching a wall and descending. THIS WILL OVERRIDE WALLSLIDING.
-@export var wallLatching: bool = false
-##wall latching must be enabled for this to work. #If enabled, the player must hold down the "latch" key to wall latch. Assign "latch" in the project input settings. The player's input will be ignored when latching.
-@export var wallLatchingModifer: bool = false
-@export_category("Dashing")
+##If enabled, pressing into a wall will stick the player in place instead of sliding.
+@export var wallLatch: bool = false
+##Enable this to allow automatic wall slides when pressing toward a wall midair.
+@export var wallGrab: bool = true
+##Target speed your player will fall at while sliding against a wall.
+@export_range(10, 400, 5) var wallSlideSpeed: float = 80.0
+##How long to keep the wall-jump facing direction before inputs can flip it again.
+@export_range(0, 1, 0.01) var wallJumpFaceLockTime: float = 0.15
+@export_group("Dashing")
 ##The type of dashes the player can do.
 @export_enum("None", "Horizontal", "Vertical", "Four Way", "Eight Way") var dashType: int
 ##How many dashes your player can do before needing to hit the ground.
@@ -72,7 +74,7 @@ signal player_killed
 @export var dashCancel: bool = true
 ##How far the player will dash. One of the dashing toggles must be on for this to be used.
 @export_range(1.5, 4) var dashLength: float = 2.5
-@export_category("Corner Cutting/Jump Correct")
+@export_group("Corner Cutting/Jump Correct")
 ##If the player's head is blocked by a jump but only by a little, the player will be nudged in the right direction and their jump will execute as intended. NEEDS RAYCASTS TO BE ATTACHED TO THE PLAYER NODE. AND ASSIGNED TO MOUNTING RAYCAST. DISTANCE OF MOUNTING DETERMINED BY PLACEMENT OF RAYCAST.
 @export var cornerCutting: bool = false
 ##How many pixels the player will be pushed (per frame) if corner cutting is needed to correct a jump.
@@ -83,7 +85,7 @@ signal player_killed
 @export var middleRaycast: RayCast2D
 ##Raycast used for corner cutting calculations. Place above and to the right of the players head point up. ALL ARE NEEDED FOR IT TO WORK.
 @export var rightRaycast: RayCast2D
-@export_category("Down Input")
+@export_group("Down Input")
 ##Holding down will crouch the player. Crouching script may need to be changed depending on how your player's size proportions are. It is built for 32x player's sprites.
 @export var crouch: bool = false
 ##Holding down and pressing the input for "roll" will execute a roll if the player is grounded. Assign a "roll" input in project settings input.
@@ -96,7 +98,7 @@ signal player_killed
 ##If enabled, pressing up will end the ground pound early
 @export var upToCancel: bool = false
 
-@export_category("Animations (Check Box if has animation)")
+@export_group("Animations (Check Box if has animation)")
 ##Animations must be named "run" all lowercase as the check box says
 @export var run: bool
 ##Animations must be named "jump" all lowercase as the check box says
@@ -156,10 +158,12 @@ var dset = false
 var colliderScaleLockY
 var colliderPosLockY
 
-var latched
-var wasLatched
+var latched: bool = false
+var wasLatched: bool = false
 var crouching
 var groundPounding
+var is_wall_sliding: bool = false
+var wall_jump_face_lock_timer: float = 0.0
 
 var anim
 var col
@@ -177,7 +181,6 @@ var rightRelease
 var jumpTap
 var jumpRelease
 var runHold
-var latchHold
 var dashTap
 var rollTap
 var downTap
@@ -253,19 +256,22 @@ func _updateData():
 	
 	
 
-func _process(_delta):
+func _process(delta):
+	wall_jump_face_lock_timer = max(0.0, wall_jump_face_lock_timer - delta)
 	#INFO animations
 	#directions
-	if is_on_wall() and !is_on_floor() and latch and wallLatching and ((wallLatchingModifer and latchHold) or !wallLatchingModifer):
+	var manual_latch_active = _is_manual_wall_latch_active()
+	if manual_latch_active:
 		latched = true
 	else:
+		if latched:
+			wasLatched = true
+			_setLatch(0.2, false)
 		latched = false
-		wasLatched = true
-		_setLatch(0.2, false)
 
-	if rightHold and !latched:
+	if wall_jump_face_lock_timer <= 0.0 and rightHold and !latched:
 		anim.scale.x = animScaleLock.x
-	if leftHold and !latched:
+	if wall_jump_face_lock_timer <= 0.0 and leftHold and !latched:
 		anim.scale.x = animScaleLock.x * -1
 	
 	#run
@@ -301,7 +307,7 @@ func _process(_delta):
 		if latched and !wasLatched:
 			anim.speed_scale = 1
 			anim.play("latch")
-		if is_on_wall() and velocity.y > 0 and slide and anim.animation != "slide" and wallSliding != 1:
+		if is_wall_sliding and velocity.y > 0 and slide and anim.animation != "slide":
 			anim.speed_scale = 1
 			anim.play("slide")
 			
@@ -342,7 +348,6 @@ func _physics_process(delta):
 	jumpTap = Input.is_action_just_pressed("jump")
 	jumpRelease = Input.is_action_just_released("jump")
 	#runHold = Input.is_action_pressed("run")
-	#latchHold = Input.is_action_pressed("latch")
 	dashTap = Input.is_action_just_pressed("dash")
 	#rollTap = Input.is_action_just_pressed("roll")
 	downTap = Input.is_action_just_pressed("down")
@@ -443,9 +448,13 @@ func _physics_process(delta):
 	else:
 		appliedGravity = gravityScale
 	
+	var manual_latch_active = _is_manual_wall_latch_active()
+	var auto_slide_active = _should_auto_wall_slide()
+	is_wall_sliding = false
+	
 	if is_on_wall() and !groundPounding:
-		appliedTerminalVelocity = terminalVelocity / wallSliding
-		if wallLatching and ((wallLatchingModifer and latchHold) or !wallLatchingModifer):
+		appliedTerminalVelocity = terminalVelocity
+		if manual_latch_active:
 			appliedGravity = 0
 			
 			if velocity.y < 0:
@@ -453,11 +462,15 @@ func _physics_process(delta):
 			if velocity.y > 0:
 				velocity.y = 0
 				
-			if wallLatchingModifer and latchHold and movementInputMonitoring == Vector2(true, true):
+			if movementInputMonitoring == Vector2(true, true):
 				velocity.x = 0
 			
-		elif wallSliding != 1 and velocity.y > 0:
-			appliedGravity = appliedGravity / wallSliding
+		elif auto_slide_active:
+			if velocity.y > wallSlideSpeed:
+				velocity.y = wallSlideSpeed
+			if movementInputMonitoring == Vector2(true, true):
+				velocity.x = 0
+			is_wall_sliding = true
 	elif !is_on_wall() and !groundPounding:
 		appliedTerminalVelocity = terminalVelocity
 	
@@ -472,7 +485,7 @@ func _physics_process(delta):
 	
 	if jumps == 1:
 		if !is_on_floor() and !is_on_wall():
-			if coyoteTime > 0:
+			if coyoteTime > 0 and !coyoteActive:
 				coyoteActive = true
 				_coyoteTime()
 				
@@ -480,15 +493,13 @@ func _physics_process(delta):
 			if coyoteActive:
 				coyoteActive = false
 				_jump()
-			if jumpBuffering > 0:
+			elif jumpBuffering > 0:
 				jumpWasPressed = true
 				_bufferJump()
 			elif jumpBuffering == 0 and coyoteTime == 0 and is_on_floor():
 				_jump()
 		elif jumpTap and is_on_wall() and !is_on_floor():
-			if wallJump and !latched:
-				_wallJump()
-			elif wallJump and latched:
+			if wallJump:
 				_wallJump()
 		elif jumpTap and is_on_floor():
 			_jump()
@@ -584,26 +595,61 @@ func _physics_process(delta):
 			
 	#INFO Ground Pound
 	if groundPound and downTap and !is_on_floor() and !is_on_wall():
-		groundPounding = true
-		gravityActive = false
-		velocity.y = 0
-		await get_tree().create_timer(groundPoundPause).timeout
-		_groundPound()
+		request_ground_pound()
 	if is_on_floor() and groundPounding:
 		_endGroundPound()
 	move_and_slide()
 	
 	if upToCancel and upHold and groundPound:
 		_endGroundPound()
-	
+
+func _is_manual_wall_latch_active() -> bool:
+	if !wallLatch:
+		return false
+	if !is_on_wall() or is_on_floor():
+		return false
+	return _is_pressing_into_wall()
+
+func _should_auto_wall_slide() -> bool:
+	if !wallGrab:
+		return false
+	if !is_on_wall() or is_on_floor():
+		return false
+	if velocity.y <= 0:
+		return false
+	return _is_pressing_into_wall()
+
+func _is_pressing_into_wall() -> bool:
+	var wall_normal = get_wall_normal()
+	if wall_normal != Vector2.ZERO:
+		var desired_direction = -sign(wall_normal.x)
+		if desired_direction < 0 and leftHold:
+			return true
+		if desired_direction > 0 and rightHold:
+			return true
+	if leftHold:
+		return test_move(global_transform, Vector2(-2, 0))
+	if rightHold:
+		return test_move(global_transform, Vector2(2, 0))
+	return false
+
 func _bufferJump():
-	await get_tree().create_timer(jumpBuffering).timeout
-	jumpWasPressed = false
+	if jumpBuffering <= 0:
+		jumpWasPressed = false
+		return
+	var timer = get_tree().create_timer(jumpBuffering)
+	timer.timeout.connect(func() -> void:
+		jumpWasPressed = false
+	)
 
 func _coyoteTime():
-	await get_tree().create_timer(coyoteTime).timeout
-	coyoteActive = false
-	jumpCount += -1
+	if coyoteTime <= 0:
+		return
+	var timer = get_tree().create_timer(coyoteTime)
+	timer.timeout.connect(func() -> void:
+		coyoteActive = false
+		jumpCount += -1
+	)
 
 	
 func _jump():
@@ -616,24 +662,31 @@ func _wallJump():
 	var horizontalWallKick = abs(jumpMagnitude * cos(wallKickAngle * (PI / 180)))
 	var verticalWallKick = abs(jumpMagnitude * sin(wallKickAngle * (PI / 180)))
 	velocity.y = -verticalWallKick
-	var dir = 1
-	if wallLatchingModifer and latchHold:
-		dir = -1
 	if wasMovingR:
-		velocity.x = -horizontalWallKick  * dir
+		velocity.x = -horizontalWallKick
 	else:
-		velocity.x = horizontalWallKick * dir
+		velocity.x = horizontalWallKick
+	wall_jump_face_lock_timer = wallJumpFaceLockTime
+	if anim:
+		anim.scale.x = animScaleLock.x if velocity.x >= 0 else -animScaleLock.x
 	if inputPauseAfterWallJump != 0:
 		movementInputMonitoring = Vector2(false, false)
 		_inputPauseReset(inputPauseAfterWallJump)
+	if jump and anim:
+		anim.speed_scale = 1
+		anim.play("jump")
 			
 func _setLatch(delay, setBool):
-	await get_tree().create_timer(delay).timeout
-	wasLatched = setBool
+	var timer = get_tree().create_timer(delay)
+	timer.timeout.connect(func() -> void:
+		wasLatched = setBool
+	)
 			
 func _inputPauseReset(time):
-	await get_tree().create_timer(time).timeout
-	movementInputMonitoring = Vector2(true, true)
+	var timer = get_tree().create_timer(time)
+	timer.timeout.connect(func() -> void:
+		movementInputMonitoring = Vector2(true, true)
+	)
 	
 
 func _decelerate(delta, vertical):
@@ -650,20 +703,26 @@ func _decelerate(delta, vertical):
 
 func _pauseGravity(time):
 	gravityActive = false
-	await get_tree().create_timer(time).timeout
-	gravityActive = true
+	var timer = get_tree().create_timer(time)
+	timer.timeout.connect(func() -> void:
+		gravityActive = true
+	)
 
 func _dashingTime(time):
 	dashing = true
-	await get_tree().create_timer(time).timeout
-	dashing = false
+	var timer = get_tree().create_timer(time)
+	timer.timeout.connect(func() -> void:
+		dashing = false
+	)
 	#if !is_on_floor():
 		#velocity.y = -gravityScale * 10
 
 func _rollingTime(time):
 	rolling = true
-	await get_tree().create_timer(time).timeout
-	rolling = false
+	var timer = get_tree().create_timer(time)
+	timer.timeout.connect(func() -> void:
+		rolling = false
+	)
 
 func _groundPound():
 	appliedTerminalVelocity = terminalVelocity * 10
@@ -673,6 +732,18 @@ func _endGroundPound():
 	groundPounding = false
 	appliedTerminalVelocity = terminalVelocity
 	gravityActive = true
+
+func request_ground_pound() -> void:
+	if groundPounding:
+		return
+	groundPounding = true
+	gravityActive = false
+	velocity.y = 0
+	var timer = get_tree().create_timer(groundPoundPause)
+	timer.timeout.connect(func() -> void:
+		if groundPounding:
+			_groundPound()
+	)
 
 func _placeHolder():
 	print("")
