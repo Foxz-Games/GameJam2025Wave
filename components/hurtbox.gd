@@ -1,6 +1,6 @@
 class_name Hurtbox extends Area2D
 
-signal received_damage(damage: int)
+signal received_damage(damage: int, attacker: String)
 
 @export var health: Health
 
@@ -12,4 +12,4 @@ func _on_area_entered(hitbox: Hitbox) -> void:
 		return 
 	 
 	health.health -= hitbox.damage
-	received_damage.emit(hitbox.damage)
+	received_damage.emit(hitbox.damage, hitbox.get_parent().name)

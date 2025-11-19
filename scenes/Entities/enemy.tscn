@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://4mwqledvmyt0"]
+[gd_scene load_steps=30 format=3 uid="uid://4mwqledvmyt0"]
 
 [ext_resource type="Script" uid="uid://biw718h885xmt" path="res://scripts/enemy/enemy.gd" id="1_vw3cy"]
 [ext_resource type="Texture2D" uid="uid://dt8f0n0l116q8" path="res://assets/entities/minion/minion-idle.png" id="1_yd0c5"]
@@ -167,6 +167,15 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_2y5yt"]
 radius = 7.071068
 
+[sub_resource type="Gradient" id="Gradient_pa8r4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_il4pi"]
+gradient = SubResource("Gradient_pa8r4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.78205127, 0.15811966)
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_vw3cy")
 metadata/_edit_lock_ = true
@@ -180,6 +189,7 @@ frame_progress = 1.0
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_2y5yt")
 metadata/_edit_lock_ = true
 
@@ -208,9 +218,17 @@ script = ExtResource("5_k22qx")
 is_log_enabled = true
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("6_il4pi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_2y5yt")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(0.60937506, 0.6171875)
+color = Color(1, 0.21960784, 0.1764706, 1)
+energy = 2.0
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_il4pi")
